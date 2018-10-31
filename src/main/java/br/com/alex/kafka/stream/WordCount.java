@@ -16,14 +16,14 @@ import java.util.Properties;
 import java.util.regex.Pattern;
 
 @Component
-public class LogStream {
+public class WordCount {
 
-	public LogStream() throws IOException {
+	public WordCount() throws IOException {
 		String inputTopic = "inputTopic";
+		String bootstrapServers = "localhost:9092";
 
 		Properties streamsConfiguration = new Properties();
 		streamsConfiguration.put(StreamsConfig.APPLICATION_ID_CONFIG, "wordcount-live-test");
-		String bootstrapServers = "localhost:9092";
 		streamsConfiguration.put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
 		streamsConfiguration.put(StreamsConfig.DEFAULT_KEY_SERDE_CLASS_CONFIG, Serdes.String().getClass().getName());
 		streamsConfiguration.put(StreamsConfig.DEFAULT_VALUE_SERDE_CLASS_CONFIG, Serdes.String().getClass().getName());
@@ -38,8 +38,9 @@ public class LogStream {
 				.groupBy((key, word) -> word)
 				.count();
 
-		wordCounts
-				.foreach((w, c) -> System.out.println("word: " + w + " -> " + c));
+		wordCounts.foreach((w, c) -> System.out.println(System.getenv("REPLICA")));
+
+		wordCounts.foreach((w, c) -> System.out.println("word: " + w + " -> " + c));
 
 		String outputTopic = "outputTopic";
 		Serde<String> stringSerde = Serdes.String();

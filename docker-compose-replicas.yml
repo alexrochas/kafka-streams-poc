@@ -1,0 +1,17 @@
+rep-1:
+  build: .
+  net: host
+  environment:
+    - REPLICA=rep-1
+
+rep-2:
+  build: .
+  net: host
+  environment:
+    - REPLICA=rep-3
+
+rep-3:
+  build: .
+  net: host
+  environment:
+    - REPLICA=rep-3
