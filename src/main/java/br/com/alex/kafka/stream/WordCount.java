@@ -20,7 +20,7 @@ public class WordCount {
 
 	public WordCount() throws IOException {
 		String inputTopic = "inputTopic";
-		String bootstrapServers = "localhost:9092";
+		String bootstrapServers = "localhost:9092,localhost:9093,localhost:9094";
 
 		Properties streamsConfiguration = new Properties();
 		streamsConfiguration.put(StreamsConfig.APPLICATION_ID_CONFIG, "wordcount-live-test");

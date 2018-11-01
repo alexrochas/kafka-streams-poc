@@ -1,29 +1,63 @@
 version: "3.5"
 services:
-  zookeeper:
-    image: confluent/zookeeper:latest
-    container_name: zookeeper
-    network_mode: "host"
-    ports:
-      - "2181:2181"
-    # volumes:
-    #   - ./config/kafka/zk.properties:/etc/kafka/zookeeper.properties
-
-  kafka:
+  kafka-1:
     image: ches/kafka:0.10.1.1
-    container_name: kafka
+    # container_name: kafka
     network_mode: "host"
     environment:
       #- KAFKA_ADVERTISED_HOST_NAME=
       - KAFKA_BROKER_ID=1
-      - ZOOKEEPER_IP=localhost
-      - ZOOKEEPER_PORT=2181
-      #- KAFKA_DEFAULT_REPLICATION_FACTOR=3
-      #- KAFKA_NUM_PARTITIONS=3
+      - KAFKA_DEFAULT_REPLICATION_FACTOR=3
+      #- ZOOKEEPER_IP=zookeeper
+      #- ZOOKEEPER_PORT=2181
+      #- ZOOKEEPER_CHROOT=/kafka
+      - ZOOKEEPER_CONNECTION_STRING=localhost:2181
+      - KAFKA_ADVERTISED_HOST_NAME=localhost
+      - KAFKA_ADVERTISED_PORT=9092
+      - KAFKA_NUM_PARTITIONS=3
+      - JMX_PORT=9011
     ports:
       - 9092:9092
-    depends_on:
-      - zookeeper
+
+  kafka-2:
+    image: ches/kafka:0.10.1.1
+    # container_name: kafka
+    network_mode: "host"
+    environment:
+      #- KAFKA_ADVERTISED_HOST_NAME=
+      - KAFKA_BROKER_ID=2
+      #- ZOOKEEPER_IP=zookeeper
+      #- ZOOKEEPER_PORT=2181
+      #- ZOOKEEPER_CHROOT=/kafka
+      - ZOOKEEPER_CONNECTION_STRING=localhost:2181
+      - KAFKA_PORT=9093
+      - KAFKA_DEFAULT_REPLICATION_FACTOR=3
+      - JMX_PORT=9012
+      - KAFKA_ADVERTISED_HOST_NAME=localhost
+      - KAFKA_ADVERTISED_PORT=9093
+      - KAFKA_NUM_PARTITIONS=3
+    ports:
+      - 9093:9093
+
+  kafka-3:
+    image: ches/kafka:0.10.1.1
+    # container_name: kafka
+    network_mode: "host"
+    environment:
+      #- KAFKA_ADVERTISED_HOST_NAME=
+      - KAFKA_BROKER_ID=3
+      #- ZOOKEEPER_IP=zookeeper
+      #- ZOOKEEPER_PORT=2181
+      #- ZOOKEEPER_CHROOT=/kafka
+      - ZOOKEEPER_CONNECTION_STRING=localhost:2181
+      - KAFKA_PORT=9094
+      - KAFKA_DEFAULT_REPLICATION_FACTOR=3
+      - JMX_PORT=9013
+      - KAFKA_ADVERTISED_HOST_NAME=localhost
+      - KAFKA_ADVERTISED_PORT=9094
+      - KAFKA_NUM_PARTITIONS=3
+    ports:
+      - 9094:9094
 
   kafdrop:
     image: thomsch98/kafdrop
@@ -35,5 +69,3 @@ services:
       - LISTEN=9000
     ports:
       - "9000:9000"
-    depends_on:
-      - zookeeper
