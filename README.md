@@ -41,6 +41,10 @@ At last, clone it, see for yourself and have a good study!
  * implement using Kafka streams from Spring framework
  * improve README.md
 
+## Useful links
+
+* [How to choose the number of topics/partitions in a Kafka cluster? ](https://balamaci.ro/kafka-streams-for-stream-processing/)
+
 ## Meta
 
 Alex Rocha - [about.me](http://about.me/alex.rochas)
