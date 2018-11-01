@@ -3,6 +3,8 @@
 
 Minor POC did with the tutorial https://www.baeldung.com/java-kafka-streams.
 
+Really great [article](https://balamaci.ro/kafka-streams-for-stream-processing/) about.
+
 ## About
 
 After struggle **a lot** I discover the right configuration.
